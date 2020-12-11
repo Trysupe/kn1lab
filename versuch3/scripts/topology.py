@@ -21,11 +21,15 @@ class MyTopo(Topo):
 
         nas = self.addHost('nas', ip='10.0.1.2/29')
 
+        burak = self.addHost('burak', ip='10.0.2.12/25')
+
         # create switch
         sw1 = self.addSwitch('sw1')
+        sw2 = self.addSwitch('sw2')
 
         # create router
         r1 = self.addHost('r1', ip='10.0.0.1/26')
+        r2 = self.addHost('r2', ip='10.0.2.1/25')
 
         # do the wiring
         # - hosts to switch
@@ -34,16 +38,23 @@ class MyTopo(Topo):
         self.addLink(ela, sw1)
         self.addLink(ben, sw1)
         self.addLink(elias, sw1)
+        self.addLink(burak, sw2)
         # - nas over router to switch
         self.addLink(r1, sw1)
         self.addLink(nas, r1)
+
+        self.addLink(r2, sw2)
+        self.addLink(r2, r1)
+
 
 
 # configuration
 def conf(network):
     # router addresses
     network['r1'].cmd('ip addr add 10.0.0.1/26 dev r1-eth0')
-    network['r1'].cmd('ip addr add 10.0.2.1/29 dev r1-eth1')
+    network['r1'].cmd('ip addr add 10.0.1.1/29 dev r1-eth1')    #changed ip addr from 10.0.2.1/29 (typo from human)
+    network['r1'].cmd('ip addr add 10.0.1.64/31 dev r1-eth2')
+    network['r1'].cmd('ip route add 10.0.2.0/25 via 10.0.1.65')
     network['r1'].cmd('sysctl net.ipv4.conf.all.forwarding=1')
 
     # client routing
@@ -54,6 +65,13 @@ def conf(network):
     network['elias'].cmd('ip route add default via 10.0.0.1')
 
     network['nas'].cmd('ip route add default via 10.0.1.1')
+
+    network['r2'].cmd('ip addr add 10.0.2.1/25 dev r2-eth0')
+    network['r2'].cmd('ip addr add 10.0.1.65/31 dev r2-eth1')
+    network['r2'].cmd('ip route add 10.0.1.0/29 via 10.0.1.64')
+    network['r2'].cmd('sysctl net.ipv4.conf.all.forwarding=1')
+
+    network['burak'].cmd('ip route add default via 10.0.2.1')
 
 
 def nettopo(**kwargs):
