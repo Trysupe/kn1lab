@@ -37,7 +37,7 @@ Hier ist die aktualisierte Liste. Schauen Sie sich die neuen Geräte und deren I
 | **r2 (Buero)**    | **Router** | **10.0.2.1/25, 10.0.1.65/31**              |
 | sw1               | Switch     | Keine IP                                  |
 | **sw2**           | **Switch** | **Keine IP**                              |
-| NAS               | Host       | 10.0.3.2                                  |
+| NAS               | Host       | 10.0.1.2                                  |
 | Ela               | PC         | 10.0.0.2                                  |
 | Lisa              | PC         | 10.0.0.3                                  |
 | Ben               | PC         | 10.0.0.4                                  |
@@ -51,7 +51,7 @@ Hier ist die aktualisierte Liste. Schauen Sie sich die neuen Geräte und deren I
 
 ### Hinweise zu Aufgabe 2.2:
 
-* Zur Vereinfachung gehen wir davon aus, dass die beiden Router `r1` (Garage) und `r2` (Buero) eine direkte Verbindung haben. Dies bedeutet auch, dass Sie für `r1` eine weitere Netzwerkschnittstelle hinzufügen müssen. 
+* Zur Vereinfachung gehen wir davon aus, dass die beiden Router `r1` (Garage) und `r2` (Buero) eine direkte Verbindung haben. Dies bedeutet auch, dass Sie für `r1` eine weitere Netzwerkschnittstelle hinzufügen müssen.
 
 * Orientieren Sie sich bei den Routen am Aufbau von Router 1. Einen Routing-Eintrag für ein Subnetz, dessen nächster Hop ein Router ist, erstellen Sie mit dem Aufruf `net['<router>'].cmd('ip route add <subnetz> via <next-hop-ip>')`.
 
